@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bias Battle – Wen würdest du lieber?</title>
+<style>
+:root{--bg:#fff3fb;--bg2:#e9e2ff;--ink:#2a1650;--card:#ffffff;--a:#ff3fa4;--b:#7a4dff;--c:#19c6d9;--gold:#ffc43d;--soft:#f4ecff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b0f3a;--bg2:#2d1459;--ink:#fdf2ff;--card:#2b1860;--soft:#3a2378;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:"Baloo 2","Nunito","Trebuchet MS",system-ui,sans-serif;color:var(--ink);background:radial-gradient(circle at 15% 0,var(--bg2),transparent 55%),radial-gradient(circle at 90% 100%,#ffd0ec55,transparent 50%),var(--bg);min-height:100vh}
+.wrap{max-width:560px;margin:0 auto;padding:18px 16px 40px;text-align:center}
+h1{font-size:clamp(2.2rem,9vw,3.2rem);line-height:1;margin:.4em 0 .2em;letter-spacing:-.5px;background:linear-gradient(90deg,var(--a),var(--b),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent;transform:rotate(-2deg)}
+p{line-height:1.45}
+.stick{font-size:4.5rem;display:inline-block;animation:wave 2s ease-in-out infinite}
+@keyframes wave{50%{transform:rotate(14deg) translateY(-6px)}}
+.btn{font:inherit;font-weight:800;font-size:1.2rem;border:0;border-radius:999px;padding:14px 30px;color:#fff;background:linear-gradient(135deg,var(--a),var(--b));box-shadow:0 6px 0 #5a2fc4;cursor:pointer;margin-top:14px}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #5a2fc4}
+.btn:focus-visible,.opt:focus-visible{outline:4px solid var(--gold);outline-offset:3px}
+.rules{background:var(--card);border-radius:22px;padding:14px 18px;margin:18px 0;text-align:left;border:3px dashed var(--a)}
+.rules li{margin:6px 0}
+.hud{display:flex;justify-content:space-between;align-items:center;font-weight:800;margin-bottom:8px}
+.pill{background:var(--card);border-radius:999px;padding:4px 14px;border:2px solid var(--b)}
+.bar{height:16px;border-radius:99px;background:var(--soft);overflow:hidden;border:2px solid var(--b)}
+.bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--c),var(--gold),var(--a));transform-origin:left}
+.q{font-size:clamp(1.4rem,6vw,1.9rem);font-weight:800;margin:22px 0 14px;line-height:1.15}
+.opt{display:block;width:100%;font:inherit;font-weight:700;font-size:1.15rem;text-align:left;background:var(--card);color:var(--ink);border:3px solid var(--b);border-radius:22px;padding:18px 16px;margin:12px 0;cursor:pointer;box-shadow:0 5px 0 var(--b);transition:transform .12s}
+.opt:nth-of-type(2){border-color:var(--a);box-shadow:0 5px 0 var(--a)}
+.opt:hover{transform:scale(1.02)}
+.opt .e{font-size:1.7rem;margin-right:10px;vertical-align:middle}
+.opt.pick{background:linear-gradient(135deg,var(--gold),#ffe9a8);color:#2a1650}
+.vs{display:inline-block;background:var(--ink);color:var(--bg);font-weight:800;border-radius:50%;width:40px;height:40px;line-height:40px;margin:-6px 0}
+.msg{min-height:1.6em;font-weight:800;color:var(--a);margin-top:6px}
+.hero{background:linear-gradient(160deg,var(--a),var(--b));color:#fff;border-radius:28px;padding:22px 16px;margin:14px 0;box-shadow:0 8px 0 #5a2fc4}
+.hero .big{font-size:2.6rem;font-weight:800;line-height:1}
+.pct{display:inline-block;background:var(--gold);color:#2a1650;font-weight:800;border-radius:99px;padding:4px 14px;margin-top:10px}
+.row{display:flex;gap:10px;margin:12px 0}
+.mini{flex:1;background:var(--card);border-radius:20px;padding:12px 6px;border:3px solid var(--c)}
+.mini b{display:block}
+.stats{background:var(--card);border-radius:20px;padding:12px 16px;text-align:left}
+.t{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:.95rem}
+.t span.n{width:112px}
+.t .tb{flex:1;height:12px;border-radius:9px;background:var(--soft);overflow:hidden}
+.t .tb i{display:block;height:100%;background:linear-gradient(90deg,var(--c),var(--b));border-radius:9px}
+.hide{display:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="start">
+  <div class="stick">🪄</div>
+  <h1>Bias Battle</h1>
+  <p><b>Wen würdest du lieber?</b> Entscheide dich schnell und finde heraus, welcher K-Pop-Star wirklich dein Bias ist!</p>
+  <ul class="rules">
+    <li>⏱️ Du hast <b>12 Sekunden</b> pro Frage.</li>
+    <li>⚡ Antwortest du in unter 6 Sekunden, gibt es einen <b>Blitz-Bonus</b>.</li>
+    <li>🔥 3 Blitze hintereinander = <b>Combo</b> und Extrapunkte!</li>
+    <li>🆕 Bei jedem Spiel gibt es <b>neue Fragen</b>. Keine Kombination kommt zweimal dran.</li>
+    <li>🎤 Band-Duelle zeigen dir am Ende deine <b>Lieblingsband</b>.</li>
+    <li>⭐ Am Ende bekommst du deinen Bias und dein Fan-Level.</li>
+  </ul>
+  <button class="btn" id="go">Los geht’s! 💜</button>
+</section>
+
+<section id="game" class="hide" aria-live="polite">
+  <div class="hud"><span class="pill" id="rd">Runde 1/10</span><span class="pill" id="st">⭐ 0</span><span class="pill" id="cb">🔥 0</span></div>
+  <div class="bar"><i id="tm"></i></div>
+  <div class="q" id="q"></div>
+  <button class="opt" id="o0"></button>
+  <div class="vs">VS</div>
+  <button class="opt" id="o1"></button>
+  <div class="msg" id="mg"></div>
+</section>
+
+<section id="end" class="hide">
+  <div class="stick">🎉</div>
+  <h1>Dein Bias ist…</h1>
+  <div class="hero"><div class="big" id="rn"></div><div id="rb"></div><div class="pct" id="rp"></div><p id="rd2"></p></div>
+  <p><b>Weitere Treffer für dich:</b></p>
+  <div class="row" id="more"></div>
+  <div class="stats" id="stats"></div>
+  <p id="lvl" style="font-weight:800;font-size:1.2rem"></p>
+  <button class="btn" id="again">Nochmal spielen 🔄</button>
+</section>
+
+</div>
+<script>
+const T={D:"Tänzer-Power",V:"Gesangs-Magie",R:"Rap-Flow",L:"Leader-Energie",C:"Sonnenschein",S:"Style & Visual"};
+const POOL=[
+["Auf der Bühne lieber…",["💃","Einen Tanz-Break vor 50.000 Fans","D"],["🎤","Eine High Note, bei der alle Gänsehaut kriegen","V"]],
+["In der Gruppe wärst du lieber…",["👑","Leader, der alles plant","L"],["🍓","Maknae, der von allen verwöhnt wird","C"]],
+["Was würdest du lieber gewinnen?",["🔥","Einen Rap-Battle","R"],["📱","Eine virale Dance-Challenge","D"]],
+["Welches Outfit würdest du lieber tragen?",["✨","Glitzer-Bühnenlook mit Kristallen","S"],["🧸","Kuscheliger Hoodie beim Fan-Treffen","C"]],
+["Was würdest du lieber machen?",["📝","Einen Song selbst schreiben","R"],["🧭","Die Gruppe durch ein Konzert führen","L"]],
+["Lieber…",["💬","Live mit Fans quatschen und lachen","C"],["📸","Das Cover-Shooting fürs neue Album","S"]],
+["Eine Woche lang nur…",["🎶","Singen","V"],["🕺","Tanzen","D"]],
+["Was passt besser zu dir?",["🏆","Die Award-Rede für alle halten","L"],["🤗","Ein trauriges Mitglied aufmuntern","C"]],
+["Du bekommst einen Wunsch:",["😎","Den coolsten Style der Welt","S"],["🎧","Die schönste Stimme der Welt","V"]],
+["Letzter Move des Konzerts:",["🎙️","Mikro-Drop mit coolem Rap-Part","R"],["💖","Riesiges Fan-Herz mit den Händen","C"]]
+];
+const BIAS={
+D:[["Jimin","BTS","💃"],["Lisa","BLACKPINK","🕺"],["Momo","TWICE","🌀"],["Daniela","KATSEYE","💫"],["Mira","HUNTR/X 🎬","🗡️"]],
+V:[["Jungkook","BTS","🎤"],["Rosé","BLACKPINK","🌹"],["Nayeon","TWICE","🍭"],["Lara","KATSEYE","🎶"],["Jinu","Saja Boys 🎬","🎙️"]],
+R:[["Suga","BTS","🔥"],["Jennie","BLACKPINK","🖤"],["Felix","Stray Kids","🦊"],["Zoey","HUNTR/X 🎬","📓"]],
+L:[["RM","BTS","👑"],["Bang Chan","Stray Kids","🐺"],["Jihyo","TWICE","🌟"],["Sophia","KATSEYE","👑"],["Rumi","HUNTR/X 🎬","💜"]],
+C:[["J-Hope","BTS","☀️"],["Sana","TWICE","💗"],["Danielle","NewJeans","🐰"],["Yoonchae","KATSEYE","🌼"],["Baby","Saja Boys 🎬","🍼"],["Abby","Saja Boys 🎬","😄"]],
+S:[["V","BTS","🌙"],["Jisoo","BLACKPINK","🌸"],["Hyunjin","Stray Kids","🎨"],["Manon","KATSEYE","💎"],["Mystery","Saja Boys 🎬","🎭"],["Romance","Saja Boys 🎬","🌹"]]
+};
+const DESC={D:"Du liebst Bewegung und Bühnenpower. Dein Bias bringt jede Choreo zum Leuchten!",V:"Für dich zählt die Stimme. Dein Bias trifft jeden Ton und macht Gänsehaut!",R:"Du magst coole Beats und starke Worte. Dein Bias hat den Flow!",L:"Du hast Mut und Plan. Dein Bias hält das Team zusammen!",C:"Du bringst gute Laune mit. Dein Bias strahlt wie die Sonne!",S:"Du hast Blick für Style. Dein Bias sieht auf jedem Foto aus wie ein Star!"};
+const $=id=>document.getElementById(id);
+const LIM=12000,FAST=6000;
+let r,sc,bs={},pts,combo,best,t0,raf,locked,Q=[],mem=[];
+const BANDS=["BTS","BLACKPINK","TWICE","Stray Kids","NewJeans","KATSEYE","HUNTR/X 🎬","Saja Boys 🎬"];
+const BLEAD=["Band-Duell! Wo wärst du lieber dabei?","Welche Band nimmt dich auf?","Dein Traum-Debüt in einer Band:","Band-Check:","Fan-Frage: Wo wärst du lieber?","Gruppen-Casting:"];
+function bgen(seen,leads){
+ for(let n=0;n<300;n++){
+  const bb=BANDS.slice().sort(()=>Math.random()-.5),k=Object.keys(ACT).sort(()=>Math.random()-.5),x=rnd(ACT[k[0]]),y=rnd(ACT[k[1]]),id=[bb[0]+x[1],bb[1]+y[1]].sort().join("|");
+  if(seen.has(id))continue;
+  seen.add(id);
+  return [leads.pop(),[x[0],"Als Teil von "+bb[0]+": "+x[1],k[0],bb[0]],[y[0],"Als Teil von "+bb[1]+": "+y[1],k[1],bb[1]]]
+ }
+ return null
+}
+const ACT={
+D:[["💃","Einen Tanz-Break vor 50.000 Fans hinlegen"],["🪩","Eine neue Choreo in einer Nacht lernen"],["📱","Eine Dance-Challenge starten, die alle nachtanzen"],["🌀","Den schwierigsten Move der Gruppe perfekt tanzen"],["🕺","Mit Backgroundtänzern über die Bühne wirbeln"],["🏅","Ein Dance-Battle gewinnen"],["🎬","Die Choreo fürs Musikvideo erfinden"],["🦶","Auf der Bühne im Takt über Treppen tanzen"]],
+V:[["🎤","Eine High Note halten, bei der alle Gänsehaut kriegen"],["🎹","Nur mit Klavier live singen"],["🎶","Den Refrain im Stadion anführen"],["🌙","Eine Ballade singen, die alle zum Weinen bringt"],["🎧","Im Studio die perfekte Aufnahme singen"],["🎻","Mit einem Orchester auftreten"],["🥇","Den Preis für die beste Stimme bekommen"],["🕊️","Ein Duett mit deinem Lieblingsstar singen"]],
+R:[["🔥","Einen Rap-Battle gewinnen"],["📝","Eigene Rap-Lyrics schreiben"],["🎛️","Einen eigenen Beat bauen"],["🎙️","Mit einem Mikro-Drop die Bühne rocken"],["⚡","Blitzschnell Reime erfinden"],["🧢","Beim Rap-Cypher mitmachen"],["📓","Songtexte in dein Notizbuch kritzeln"],["🚀","Den schnellsten Rap-Part der Gruppe sprechen"]],
+L:[["👑","Die Gruppe als Leader anführen"],["📋","Den Tourplan für alle organisieren"],["🏆","Die Award-Rede für alle halten"],["🧭","Das Team vor dem Auftritt motivieren"],["🛡️","Die Gruppe im Interview vertreten"],["🧩","Die Aufstellung für den Auftritt festlegen"],["🗣️","Bei Streit alle wieder zusammenbringen"],["🎖️","Das Team zum Sieg führen"]],
+C:[["🍓","Als Maknae von allen verwöhnt werden"],["💬","Live mit Fans quatschen und lachen"],["🤗","Fans beim Fan-Treffen umarmen"],["😂","Die Gruppe im Tourbus zum Lachen bringen"],["🌻","Ein trauriges Mitglied aufmuntern"],["🧸","Im kuscheligen Hoodie Fan-Grüße filmen"],["🍜","Für die ganze Gruppe Ramen kochen"],["💖","Mit den Händen ein riesiges Herz formen"]],
+S:[["✨","Im Glitzer-Outfit mit Kristallen strahlen"],["📸","Das Cover-Shooting fürs Album machen"],["🌈","Eine neue Haarfarbe ausprobieren"],["😎","Den coolsten Style der Welt haben"],["🏰","Ein Fotoshooting im Schloss machen"],["🕶️","Mit Sonnenbrille über den roten Teppich laufen"],["💅","Das Styling für den Auftritt aussuchen"],["👗","Ein Outfit von deiner Lieblingsdesignerin tragen"]]};
+const LEAD=["Was würdest du lieber tun?","Du hast die Wahl:","Stell dir vor, du bist ein Idol:","Backstage-Frage:","Schnell entscheiden!","Dein Traumtag als Star:","Du darfst nur eins wählen:","Mikro an! Was nimmst du?","Auf dem Weg zum Debüt:","Die Fans warten. Was machst du?","Dein Wunsch ist frei:","Tour-Entscheidung:"];
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+function gen(seen,leads){
+ for(let n=0;n<300;n++){
+  const k=Object.keys(ACT).sort(()=>Math.random()-.5),a=k[0],b=k[1],x=rnd(ACT[a]),y=rnd(ACT[b]),id=[x[1],y[1]].sort().join("|");
+  if(seen.has(id))continue;
+  seen.add(id);
+  return [leads.pop(),[x[0],x[1],a],[y[0],y[1],b]]
+ }
+ return null
+}
+function draw(){
+ let seen=new Set(mem);
+ try{const s=localStorage.getItem("bb_seen");if(s)seen=new Set(JSON.parse(s))}catch(e){}
+ const out=[],leads=LEAD.slice().sort(()=>Math.random()-.5);
+ POOL.slice().sort(()=>Math.random()-.5).forEach(q=>{if(out.length<3&&!seen.has(q[0])){seen.add(q[0]);out.push(q)}});
+ const bl=BLEAD.slice().sort(()=>Math.random()-.5);for(let i=0;i<4;i++){const q=bgen(seen,bl);if(q)out.push(q)}
+ while(out.length<10){const q=gen(seen,leads);if(!q)break;out.push(q)}
+ out.sort(()=>Math.random()-.5);
+ mem=[...seen];
+ try{localStorage.setItem("bb_seen",JSON.stringify(mem))}catch(e){}
+ return out
+}
+function show(id){["start","game","end"].forEach(x=>$(x).classList.toggle("hide",x!==id))}
+function start(){Q=draw();r=0;pts=0;combo=0;best=0;sc={D:0,V:0,R:0,L:0,C:0,S:0};bs={};BANDS.forEach(b=>bs[b]=0);show("game");next()}
+function next(){
+ if(r>=Q.length)return finish();
+ locked=false;const q=Q[r];
+ $("rd").textContent="Runde "+(r+1)+"/"+Q.length;$("q").textContent=q[0];$("mg").textContent="";
+ [1,2].forEach((k,i)=>{const b=$("o"+i);b.className="opt";b.innerHTML="";const e=document.createElement("span");e.className="e";e.textContent=q[k][0];b.append(e,q[k][1])});
+ hud();t0=performance.now();cancelAnimationFrame(raf);tick()
+}
+function hud(){$("st").textContent="⭐ "+pts;$("cb").textContent="🔥 "+combo}
+function tick(){
+ const el=performance.now()-t0,left=Math.max(0,1-el/LIM);
+ $("tm").style.transform="scaleX("+left+")";
+ if(el>=LIM&&!locked){locked=true;combo=0;hud();$("mg").textContent="⏰ Zu langsam! Keine Punkte.";setTimeout(()=>{r++;next()},1100);return}
+ if(!locked)raf=requestAnimationFrame(tick)
+}
+function pick(i){
+ if(locked)return;locked=true;cancelAnimationFrame(raf);
+ const el=performance.now()-t0,trait=Q[r][i+1][2];let add=2,m="👍 Gute Wahl!";
+ sc[trait]+=2;const bd=Q[r][i+1][3];if(bd)bs[bd]+=2;
+ if(el<FAST){add+=1;sc[trait]+=1;combo++;m="⚡ Blitz! +1";if(combo>=3){add+=2;sc[trait]+=1;m="🔥 COMBO x"+combo+"! +3"}}else combo=0;
+ best=Math.max(best,combo);pts+=add;hud();
+ $("o"+i).classList.add("pick");$("mg").textContent=m;
+ setTimeout(()=>{r++;next()},900)
+}
+function finish(){
+ show("end");
+ const ord=Object.keys(sc).sort((a,b)=>sc[b]-sc[a]),top=ord[0],sec=ord[1],tot=Object.values(sc).reduce((a,b)=>a+b,0)||1;
+ const bo=Object.keys(bs).sort((a,b)=>bs[b]-bs[a]),fav=bs[bo[0]]>0?bo[0]:null;
+ const pool=BIAS[top].slice().sort(()=>Math.random()-.5).sort((a,b)=>(b[1]===fav)-(a[1]===fav)),m=pool[0];
+ $("rn").textContent=m[2]+" "+m[0];$("rb").textContent="aus "+m[1];
+ $("rp").textContent=Math.min(99,Math.round(60+sc[top]/tot*100))+"% Match";
+ $("rd2").textContent=DESC[top]+(fav?" 💜 Deine Lieblingsband: "+fav:"");
+ $("more").innerHTML="";
+ [pool[1],pool[2],BIAS[sec][Math.floor(Math.random()*BIAS[sec].length)]].forEach(x=>{const d=document.createElement("div");d.className="mini";const b=document.createElement("b");b.textContent=x[2]+" "+x[0];d.append(b,x[1]);$("more").append(d)});
+ const mx=Math.max(...Object.values(sc))||1;
+ $("stats").innerHTML="";
+ ord.forEach(k=>{const d=document.createElement("div");d.className="t";d.innerHTML='<span class="n"></span><span class="tb"><i></i></span>';d.firstChild.textContent=T[k];d.querySelector("i").style.width=Math.round(sc[k]/mx*100)+"%";$("stats").append(d)});
+ const lv=pts>=24?"👑 Legendärer Fan":pts>=18?"💜 Super-Fan":pts>=12?"⭐ Rising Star":"🌱 Trainee";
+ $("lvl").textContent=lv+" · "+pts+" Punkte · längste Combo: "+best
+}
+$("go").onclick=start;$("again").onclick=start;
+$("o0").onclick=()=>pick(0);$("o1").onclick=()=>pick(1);
+</script>
+</body>
+</html>
